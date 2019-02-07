@@ -105,8 +105,8 @@ const tiers = [
 ];
 const footers = [
   {
-    title: 'Company',
-    description: ['Team', 'History', 'Contact us', 'Locations'],
+    title: 'Compañia',
+    description: ['Equipo', 'Historia', 'Contacto'],
   },
   {
     title: 'Features',
@@ -150,14 +150,14 @@ class Index extends React.Component {
       <AppBar position="static" color="default" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
-            Company name
+            Bazinga
           </Typography>
-          <Button>Features</Button>
-          <Button>Enterprise</Button>
-          <Button>Support</Button>
+          <Button>Carácteristicas</Button>
+          <Button>Productos</Button>
+          <Button>Soporte</Button>
           <Link href="/login">
             <Button color="primary" variant="outlined">
-              Login
+              Inicio
             </Button>
           </Link>
         </Toolbar>

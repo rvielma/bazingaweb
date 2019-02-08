@@ -14,7 +14,9 @@ import Grid from '@material-ui/core/Grid';
 import StarIcon from '@material-ui/icons/StarBorder';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import CardMedia from '@material-ui/core/CardMedia';
 import { withStyles } from '@material-ui/core/styles';
+import indigo from '@material-ui/core/colors/indigo';
 import Link from 'next/link';
 
 const styles = theme => ({
@@ -29,9 +31,15 @@ const styles = theme => ({
   },
   appBar: {
     position: 'relative',
+    backgroundColor: theme.palette.common.black,
+    color : theme.palette.common.white,
   },
   toolbarTitle: {
     flex: 1,
+    color : theme.palette.common.white,
+  },
+  letra:{
+    color : theme.palette.common.white,
   },
   layout: {
     width: 'auto',
@@ -46,6 +54,7 @@ const styles = theme => ({
   heroContent: {
     maxWidth: 600,
     margin: '0 auto',
+    backgroundColor: theme.palette.common.indigo,
     padding: `${theme.spacing.unit * 8}px 0 ${theme.spacing.unit * 6}px`,
   },
   cardHeader: {
@@ -66,6 +75,13 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 8,
     borderTop: `1px solid ${theme.palette.divider}`,
     padding: `${theme.spacing.unit * 6}px 0`,
+  },
+  card: {
+    maxWidth: 400,
+  },
+  media: {
+    height: 0,
+    paddingTop: '56.25%', // 16:9
   },
 });
 
@@ -152,9 +168,9 @@ class Index extends React.Component {
           <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
             Bazinga
           </Typography>
-          <Button>Carácteristicas</Button>
-          <Button>Productos</Button>
-          <Button>Soporte</Button>
+          <Button className={classes.letra}>Carácteristicas</Button>
+          <Button className={classes.letra}>Productos</Button>
+          <Button className={classes.letra}>Soporte</Button>
           <Link href="/login">
             <Button color="primary" variant="outlined">
               Inicio
@@ -165,9 +181,16 @@ class Index extends React.Component {
       <main className={classes.layout}>
         {/* Hero unit */}
         <div className={classes.heroContent}>
-          <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-            Pricing
-          </Typography>
+          {/* <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
+            Bazinga
+          </Typography> */}
+          <Card>
+            <CardMedia
+              className={classes.media}
+              image="/static/images/Bazinga.png"
+              title="Paella dish"
+            />
+          </Card>
           <Typography variant="h6" align="center" color="textSecondary" component="p">
             Quickly build an effective pricing table for your potential customers with this layout.
             It&apos;s built with default Material-UI components with little customization.
@@ -178,7 +201,7 @@ class Index extends React.Component {
           {tiers.map(tier => (
             // Enterprise card is full width at sm breakpoint
             <Grid item key={tier.title} xs={12} sm={tier.title === 'Enterprise' ? 12 : 6} md={4}>
-              <Card>
+              <Card className={classes.card}>
                 <CardHeader
                   title={tier.title}
                   subheader={tier.subheader}

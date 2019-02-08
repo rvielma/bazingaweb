@@ -184,11 +184,11 @@ class Index extends React.Component {
           {/* <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
             Bazinga
           </Typography> */}
-          <Card>
+          <Card >
             <CardMedia
               className={classes.media}
               image="/static/images/Bazinga.png"
-              title="Paella dish"
+              title="Gamifica tu vida"
             />
           </Card>
           <Typography variant="h6" align="center" color="textSecondary" component="p">

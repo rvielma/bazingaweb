@@ -17,6 +17,16 @@ import Typography from '@material-ui/core/Typography';
 import CardMedia from '@material-ui/core/CardMedia';
 import { withStyles } from '@material-ui/core/styles';
 import indigo from '@material-ui/core/colors/indigo';
+import Badge from '@material-ui/core/Badge';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+import IconButton from '@material-ui/core/IconButton';
+import MailIcon from '@material-ui/icons/Mail';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import MoreIcon from '@material-ui/icons/MoreVert';
+import { fade } from '@material-ui/core/styles/colorManipulator';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import MenuIcon from '@material-ui/icons/Menu';
 import Link from 'next/link';
 
 const styles = theme => ({
@@ -54,7 +64,7 @@ const styles = theme => ({
   heroContent: {
     maxWidth: 600,
     margin: '0 auto',
-    backgroundColor: theme.palette.common.indigo,
+    backgroundColor: theme.palette.common.blue,
     padding: `${theme.spacing.unit * 8}px 0 ${theme.spacing.unit * 6}px`,
   },
   cardHeader: {
@@ -82,6 +92,25 @@ const styles = theme => ({
   media: {
     height: 0,
     paddingTop: '56.25%', // 16:9
+  },
+  grow: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20,
+  },
+  sectionDesktop: {
+    display: 'none',
+    [theme.breakpoints.up('md')]: {
+      display: 'flex',
+    },
+  },
+  sectionMobile: {
+    display: 'flex',
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
+    },
   },
 });
 
@@ -142,6 +171,8 @@ const footers = [
 class Index extends React.Component {
   state = {
     open: false,
+    anchorEl: null,
+    mobileMoreAnchorEl: null,
   };
 
   handleClose = () => {
@@ -156,20 +187,88 @@ class Index extends React.Component {
     });
   };
 
+  handleProfileMenuOpen = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handleMenuClose = () => {
+    this.setState({ anchorEl: null });
+    this.handleMobileMenuClose();
+  };
+
+  handleMobileMenuOpen = event => {
+    this.setState({ mobileMoreAnchorEl: event.currentTarget });
+  };
+
+  handleMobileMenuClose = () => {
+    this.setState({ mobileMoreAnchorEl: null });
+  };
+
   render() {
-    const { classes} = this.props;
     const { open } = this.state;
+    const { anchorEl, mobileMoreAnchorEl } = this.state;
+    const { classes } = this.props;
+    const isMenuOpen = Boolean(anchorEl);
+    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+    const renderMenu = (
+      <Menu
+        anchorEl={anchorEl}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        open={isMenuOpen}
+        onClose={this.handleMenuClose}
+      >
+        <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
+        <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
+      </Menu>
+    );
+
+    const renderMobileMenu = (
+      <Menu
+        anchorEl={mobileMoreAnchorEl}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        open={isMobileMenuOpen}
+        onClose={this.handleMenuClose}
+      >
+        <MenuItem onClick={this.handleMobileMenuClose}>
+          <IconButton color="inherit">
+            <Badge badgeContent={4} color="secondary">
+              <MailIcon />
+            </Badge>
+          </IconButton>
+          <p>Messages</p>
+        </MenuItem>
+        <MenuItem onClick={this.handleMobileMenuClose}>
+          <IconButton color="inherit">
+            <Badge badgeContent={11} color="secondary">
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+          <p>Notifications</p>
+        </MenuItem>
+        <MenuItem onClick={this.handleProfileMenuOpen}>
+          <IconButton color="inherit">
+            <AccountCircle />
+          </IconButton>
+          <p>Profile</p>
+        </MenuItem>
+      </Menu>
+    );
 
     return (
       <React.Fragment>
       <CssBaseline />
       <AppBar position="static" color="default" className={classes.appBar}>
         <Toolbar>
+          <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
+              <MenuIcon />
+          </IconButton>
           <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
             Bazinga
           </Typography>
           <Button className={classes.letra}>Carácteristicas</Button>
-          <Button className={classes.letra}>Productos</Button>
           <Button className={classes.letra}>Soporte</Button>
           <Link href="/login">
             <Button color="primary" variant="outlined">
@@ -178,6 +277,8 @@ class Index extends React.Component {
           </Link>
         </Toolbar>
       </AppBar>
+      {renderMenu}
+      {renderMobileMenu}
       <main className={classes.layout}>
         {/* Hero unit */}
         <div className={classes.heroContent}>
